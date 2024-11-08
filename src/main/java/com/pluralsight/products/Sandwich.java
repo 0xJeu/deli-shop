@@ -2,14 +2,17 @@ package com.pluralsight.products;
 
 import java.util.List;
 
-public class Sandwich {
-    protected List<String> bread;
-    protected List<String> meatToppings, cheeseToppings, regularToppings, sauces, sides;
-    protected boolean isToasted;
+public class Sandwich implements Product {
+    private final String description;
+    private List<String> bread;
+    private List<String> meatToppings, cheeseToppings, regularToppings, sauces, sides;
+    private boolean isToasted;
     private String sandwichSize;
     private double extraMeat, extraCheese;
 
     public Sandwich(List<String> bread, List<String> meatToppings, List<String> cheeseToppings, List<String> regularToppings, List<String> sauces, List<String> sides) {
+        this.description = "Sandwich";
+        this.sandwichSize = getSize();
         this.bread = bread;
         this.meatToppings = meatToppings;
         this.cheeseToppings = cheeseToppings;
@@ -19,12 +22,18 @@ public class Sandwich {
         this.isToasted = isToasted();
     }
 
-    public void getPrice() {
+    @Override
+    public double getPrice() {
 
+        return 0;
     }
 
-
     //Getters and Setters
+    @Override
+    public String getDescription() {
+        return description;
+    }
+
     public List<String> getBread() {
         return bread;
     }
@@ -80,5 +89,31 @@ public class Sandwich {
     public void setToasted(boolean toasted) {
         isToasted = toasted;
     }
+
+    public void setSandwichSize(String sandwichSize) {
+        this.sandwichSize = sandwichSize;
+    }
+
+    @Override
+    public String getSize() {
+        return sandwichSize;
+    }
+
+    public double getExtraMeat() {
+        return extraMeat;
+    }
+
+    public void setExtraMeat(double extraMeat) {
+        this.extraMeat = extraMeat;
+    }
+
+    public double getExtraCheese() {
+        return extraCheese;
+    }
+
+    public void setExtraCheese(double extraCheese) {
+        this.extraCheese = extraCheese;
+    }
+
 }
 

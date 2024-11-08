@@ -1,18 +1,18 @@
 package com.pluralsight;
 
-import com.pluralsight.products.EightInchSandwich;
-import com.pluralsight.products.FourInchSandwich;
+import com.pluralsight.products.Chip;
+import com.pluralsight.products.Drink;
 import com.pluralsight.products.Sandwich;
-import com.pluralsight.products.TwelveInchSandwich;
 
 import java.util.*;
 import java.util.regex.Pattern;
 
 public class UserInterface {
     static final Scanner keyboard = new Scanner(System.in);
+    static String customerName = "";
 
     public static List<Sandwich> sandwichOrder = new ArrayList<>();
-    public static Order customerOrder = new Order(sandwichOrder, processAddDrinkRequest(), "Chips");
+    public static Order customerOrder = new Order(customerName);
 
     public static List<String> bread = new ArrayList<>();
     public static List<String> meatToppings = new ArrayList<>();
@@ -62,127 +62,162 @@ public class UserInterface {
         sides.add("sauce");
 
 
+    }
 
-
+    public static void getCustomerName(String name) {
+        customerName = name;
     }
 
     public static void homeScreen() {
         System.out.print("""
-                1 - Find vehicles within a price range
+                1 - New Order
                 0 - Exit
                 Please enter your selection:""");
     }
 
     public static void orderScreen() {
-        System.out.print("""
-                1) Add Sandwich
-                2) Add Drink
-                3) Add Chips
-                4) Checkout
-                0) Cancel Order - This will return to home screen
-                
-                Please enter your selection:""");
-        int userInput = Integer.parseInt(keyboard.nextLine());
+        while (true) {
+            System.out.print("""
+                    1) Add Sandwich
+                    2) Add Drink
+                    3) Add Chips
+                    4) Checkout
+                    0) Cancel Order - This will return to home screen
+                    
+                    Please enter your selection:""");
+            int userInput = Integer.parseInt(keyboard.nextLine());
 
-        switch (userInput) {
-            case 1:
-                processAddSandwichRequest();
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 0:
-                break;
+            switch (userInput) {
+                case 1:
+                    processAddSandwichRequest();
+                    break;
+                case 2:
+                    processAddDrinkRequest();
+                    break;
+                case 3:
+                    processAddChipRequest();
+                    break;
+                case 4:
+                    break;
+                case 0:
+                    break;
+            }
         }
-
 
 
     }
 
     public static void processAddSandwichRequest() {
-        //bread input
-        System.out.println("The available bread options are: " + String.join(", ", bread));
-        System.out.print("Please select the type of bread you want:");
-        List<String> userBread = Collections.singletonList(keyboard.nextLine().toLowerCase());
+        while (true) {
+            //bread input
+            System.out.println("The available bread options are: " + String.join(", ", bread));
+            System.out.print("Please select the type of bread you want:");
+            List<String> userBread = Collections.singletonList(keyboard.nextLine().toLowerCase());
 
-        //meat topping input
-        System.out.println("Meat Toppings:");
-        System.out.println("The available meat toppings options are: " + String.join(", ", meatToppings));
-        System.out.print("Enter your desired toppings (separated by commas):");
-        String meatResponse = keyboard.nextLine().toLowerCase();
-        List<String> userMeatToppings = Arrays.asList(meatResponse.split(Pattern.quote(",")));
+            //meat topping input
+            System.out.println("Meat Toppings:");
+            System.out.println("The available meat toppings options are: " + String.join(", ", meatToppings));
+            System.out.print("Enter your desired toppings (separated by commas):");
+            String meatResponse = keyboard.nextLine().toLowerCase();
+            List<String> userMeatToppings = Arrays.asList(meatResponse.split(Pattern.quote(",")));
 
-        //cheese topping input
-        System.out.println("Cheese Toppings:");
-        System.out.println("The available cheese toppings options are: " + String.join(", ", cheeseToppings));
-        System.out.print("Enter your desired toppings (separated by commas):");
-        String cheeseResponse = keyboard.nextLine().toLowerCase();
-        List<String> userCheeseToppings = Arrays.asList(cheeseResponse.split(Pattern.quote(",")));
+            //cheese topping input
+            System.out.println("Cheese Toppings:");
+            System.out.println("The available cheese toppings options are: " + String.join(", ", cheeseToppings));
+            System.out.print("Enter your desired toppings (separated by commas):");
+            String cheeseResponse = keyboard.nextLine().toLowerCase();
+            List<String> userCheeseToppings = Arrays.asList(cheeseResponse.split(Pattern.quote(",")));
 
-        //Veggie topping input
-        System.out.println("Cheese Toppings:");
-        System.out.println("The available cheese toppings options are: " + String.join(", ", veggieToppings));
-        System.out.print("Enter your desired toppings (separated by commas):");
-        String veggieResponse = keyboard.nextLine().toLowerCase();
-        List<String> userVeggieToppings = Arrays.asList(veggieResponse.split(Pattern.quote(",")));
+            //Veggie topping input
+            System.out.println("Cheese Toppings:");
+            System.out.println("The available cheese toppings options are: " + String.join(", ", veggieToppings));
+            System.out.print("Enter your desired toppings (separated by commas):");
+            String veggieResponse = keyboard.nextLine().toLowerCase();
+            List<String> userVeggieToppings = Arrays.asList(veggieResponse.split(Pattern.quote(",")));
 
-        //Sauce input
-        System.out.println("Sauces:");
-        System.out.println("The available cheese toppings options are: " + String.join(", ", sauces));
-        System.out.print("Enter your desired sauces (separated by commas):");
-        String sauceResponse = keyboard.nextLine().toLowerCase();
-        List<String> userSauces = Arrays.asList(sauceResponse.split(Pattern.quote(",")));
+            //Sauce input
+            System.out.println("Sauces:");
+            System.out.println("The available cheese toppings options are: " + String.join(", ", sauces));
+            System.out.print("Enter your desired sauces (separated by commas):");
+            String sauceResponse = keyboard.nextLine().toLowerCase();
+            List<String> userSauces = Arrays.asList(sauceResponse.split(Pattern.quote(",")));
 
-        //Sides input
-        System.out.println("Sauces:");
-        System.out.println("The available cheese toppings options are: " + String.join(", ", sides));
-        System.out.print("Enter your desired sauces (separated by commas):");
-        String sidesResponse = keyboard.nextLine().toLowerCase();
-        List<String> userSides = Arrays.asList(sauceResponse.split(Pattern.quote(",")));
+            //Sides input
+            System.out.println("Sauces:");
+            System.out.println("The available cheese toppings options are: " + String.join(", ", sides));
+            System.out.print("Enter your desired sauces (separated by commas):");
+            String sidesResponse = keyboard.nextLine().toLowerCase();
+            List<String> userSides = Arrays.asList(sauceResponse.split(Pattern.quote(",")));
 
-        //Toasted input
-        System.out.print("Would you like your sandwich toasted? yes or no:");
-        String userToastedResponse = keyboard.nextLine();
+            //Toasted input
+            System.out.print("Would you like your sandwich toasted? yes or no:");
+            String userToastedResponse = keyboard.nextLine();
 
-        System.out.println("what size sandwich would you like to order? (4)inches, (8)inches, or  (12)inches: ");
-        int sandwichSize = Integer.parseInt(keyboard.nextLine().toLowerCase());
+            System.out.println("what size sandwich would you like to order? (4)inches, (8)inches, or  (12)inches: ");
+            int sandwichSize = Integer.parseInt(keyboard.nextLine().toLowerCase());
 
-        switch (sandwichSize) {
-            case 4:
-                FourInchSandwich fourInchSandwich = new FourInchSandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
-                if (userToastedResponse.equalsIgnoreCase("yes")) {
-                    fourInchSandwich.setToasted(true);
-                }
-                sandwichOrder.add(fourInchSandwich);
-            case 8:
-                EightInchSandwich eightInchSandwich = new EightInchSandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
-                if (userToastedResponse.equalsIgnoreCase("yes")) {
-                    eightInchSandwich.setToasted(true);
-                }
-                sandwichOrder.add(eightInchSandwich);
-            case 12:
-                TwelveInchSandwich twelveInchSandwich = new TwelveInchSandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
-                if (userToastedResponse.equalsIgnoreCase("yes")) {
-                    twelveInchSandwich.setToasted(true);
-                }
-                sandwichOrder.add(twelveInchSandwich);
+            switch (sandwichSize) {
+                case 4:
+                    Sandwich fourInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
+                    fourInchSandwich.setSandwichSize("4 Inches");
+                    if (userToastedResponse.equalsIgnoreCase("yes")) {
+                        fourInchSandwich.setToasted(true);
+                    }
+                    sandwichOrder.add(fourInchSandwich);
+                case 8:
+                    Sandwich eightInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
+                    eightInchSandwich.setSandwichSize("8 Inches");
+                    if (userToastedResponse.equalsIgnoreCase("yes")) {
+                        eightInchSandwich.setToasted(true);
+                    }
+                    sandwichOrder.add(eightInchSandwich);
+                case 12:
+                    Sandwich twelveInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
+                    twelveInchSandwich.setSandwichSize("12 Inches");
+                    if (userToastedResponse.equalsIgnoreCase("yes")) {
+                        twelveInchSandwich.setToasted(true);
+                    }
+                    sandwichOrder.add(twelveInchSandwich);
 
+            }
+            System.out.print("Would you like to add another sandwich? yes or no:");
+            String addAnother = keyboard.nextLine();
+
+            if (addAnother.equalsIgnoreCase("yes")) {
+                return;
+            } else {
+                break;
+            }
         }
     }
 
-    public static String  processAddDrinkRequest() {
+    public static void processAddDrinkRequest() {
+        List<String> drinkFlavors = List.of("Coca-Cola", "Sprite", "Dr. Pepper", "Water", "Sweet Tea");
+
         System.out.println("Drink Sizes: Small, Medium, or Large");
         System.out.print("What size of drink would you like?:");
         String drinkSize = keyboard.nextLine();
 
-        System.out.println("Drink Flavors: Coca-Cola, Sprite, Dr. Pepper, Water,  or Sweet Tea");
+        System.out.println("Drink Flavors: " + String.join(", ", drinkFlavors));
         System.out.print("What flavor of drink would you like?:");
-        String drinkFlavor = keyboard.nextLine();
+        String drinkChoice = keyboard.nextLine();
 
-        return String.format("%s %s", drinkSize, drinkFlavor);
+        Drink userDrink = new Drink(drinkChoice, drinkSize);
+
+        customerOrder.setDrink(userDrink);
+    }
+
+    public static void processAddChipRequest() {
+        List<String> chipNames = List.of("Lays", "Doritos", "Pringles", "Ruffles", "Cheetos");
+
+        System.out.println("Chip options: " + String.join(", ", chipNames));
+        System.out.print("What bag of chips would you like?:");
+        String chipChoice = keyboard.nextLine();
+
+        Chip userChip = new Chip(chipChoice);
+
+        customerOrder.setChips(userChip);
+
     }
 
 }
