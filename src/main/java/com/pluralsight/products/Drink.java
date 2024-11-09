@@ -3,18 +3,27 @@ package com.pluralsight.products;
 public class Drink implements Product{
 
     private String name;
-    private double price;
     private String size;
 
     public Drink(String name, String size) {
         this.name = name;
-        this.price = price;
         this.size = size;
     }
 
     @Override
     public double getPrice() {
-        return 0;
+        double drinkPrice = 0;
+
+        switch (size) {
+            case "small":
+                drinkPrice = 2.00;
+            case "medium":
+                drinkPrice = 2.50;
+            case "large":
+                drinkPrice = 3.00;
+        }
+
+        return drinkPrice;
     }
 
     @Override
@@ -34,10 +43,6 @@ public class Drink implements Product{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public void setSize(String size) {

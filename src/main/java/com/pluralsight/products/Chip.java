@@ -11,7 +11,7 @@ public class Chip implements Product{
 
     @Override
     public double getPrice() {
-        return 0;
+        return this.price;
     }
 
     @Override

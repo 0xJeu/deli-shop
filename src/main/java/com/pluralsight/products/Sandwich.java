@@ -8,7 +8,8 @@ public class Sandwich implements Product {
     private List<String> meatToppings, cheeseToppings, regularToppings, sauces, sides;
     private boolean isToasted;
     private String sandwichSize;
-    private double extraMeat, extraCheese;
+    private boolean extraMeat, extraCheese;
+    private double price;
 
     public Sandwich(List<String> bread, List<String> meatToppings, List<String> cheeseToppings, List<String> regularToppings, List<String> sauces, List<String> sides) {
         this.description = "Sandwich";
@@ -24,11 +25,27 @@ public class Sandwich implements Product {
 
     @Override
     public double getPrice() {
+        double sandwichPrice = this.price;
 
-        return 0;
+        switch (sandwichSize) {
+            case "4 Inches":
+                sandwichPrice += isExtraMeat() ? .50 : 0;
+                sandwichPrice += isExtraCheese() ? .30 : 0;
+            case "8 Inches":
+                sandwichPrice += isExtraMeat() ? 1.00 : 0;
+                sandwichPrice += isExtraCheese() ? .60 : 0;
+            case "12 Inches":
+                sandwichPrice += isExtraMeat() ? 1.50 : 0;
+                sandwichPrice += isExtraCheese() ? .90 : 0;
+        }
+
+        return sandwichPrice;
     }
 
     //Getters and Setters
+    public void setPrice(double price) {
+        this.price = price;
+    }
     @Override
     public String getDescription() {
         return description;
@@ -99,21 +116,20 @@ public class Sandwich implements Product {
         return sandwichSize;
     }
 
-    public double getExtraMeat() {
+    public boolean isExtraMeat() {
         return extraMeat;
     }
 
-    public void setExtraMeat(double extraMeat) {
+    public void setExtraMeat(boolean extraMeat) {
         this.extraMeat = extraMeat;
     }
 
-    public double getExtraCheese() {
+    public boolean isExtraCheese() {
         return extraCheese;
     }
 
-    public void setExtraCheese(double extraCheese) {
+    public void setExtraCheese(boolean extraCheese) {
         this.extraCheese = extraCheese;
     }
-
 }
 

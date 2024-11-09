@@ -13,6 +13,7 @@ public class Order {
     Drink drink;
     Chip chips;
     private String  dateTime;
+    private double price;
 
     //Constructors
     public Order(String customerName) {
@@ -30,7 +31,14 @@ public class Order {
         this.dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-
+    public double totalPrice() {
+        double totalPrice = 0;
+        double sandwichSubtotal = sandwich.stream()
+                .mapToDouble(Sandwich::getPrice)
+                .sum();
+        totalPrice += sandwichSubtotal + drink.getPrice() + chips.getPrice();
+        return totalPrice;
+    }
 
     //Getters and Setters
     public List<Sandwich> getSandwich() {

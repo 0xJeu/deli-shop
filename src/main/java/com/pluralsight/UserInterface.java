@@ -109,6 +109,8 @@ public class UserInterface {
 
     public static void processAddSandwichRequest() {
         while (true) {
+            double priceSubtotal = 0;
+
             //bread input
             System.out.println("The available bread options are: " + String.join(", ", bread));
             System.out.print("Please select the type of bread you want:");
@@ -121,12 +123,18 @@ public class UserInterface {
             String meatResponse = keyboard.nextLine().toLowerCase();
             List<String> userMeatToppings = Arrays.asList(meatResponse.split(Pattern.quote(",")));
 
+            System.out.print("Would you like extra meat? yes or no:");
+            String userExtraMeat = keyboard.nextLine();
+
             //cheese topping input
             System.out.println("Cheese Toppings:");
             System.out.println("The available cheese toppings options are: " + String.join(", ", cheeseToppings));
             System.out.print("Enter your desired toppings (separated by commas):");
             String cheeseResponse = keyboard.nextLine().toLowerCase();
             List<String> userCheeseToppings = Arrays.asList(cheeseResponse.split(Pattern.quote(",")));
+
+            System.out.print("Would you like extra cheese? yes or no:");
+            String userExtraCheese = keyboard.nextLine();
 
             //Veggie topping input
             System.out.println("Cheese Toppings:");
@@ -160,23 +168,50 @@ public class UserInterface {
                 case 4:
                     Sandwich fourInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
                     fourInchSandwich.setSandwichSize("4 Inches");
-                    if (userToastedResponse.equalsIgnoreCase("yes")) {
-                        fourInchSandwich.setToasted(true);
-                    }
+
+                    fourInchSandwich.setToasted(userToastedResponse.equalsIgnoreCase("yes"));
+                    fourInchSandwich.setExtraMeat(userExtraMeat.equalsIgnoreCase("yes"));
+                    fourInchSandwich.setExtraCheese(userExtraCheese.equalsIgnoreCase("yes"));
+
+                    priceSubtotal = 5.50;
+
+                    priceSubtotal += !userMeatToppings.isEmpty() ? 1.00 : 0;
+                    priceSubtotal += !userCheeseToppings.isEmpty() ? 0.75 : 0;
+
+                    fourInchSandwich.setPrice(priceSubtotal);
+
                     sandwichOrder.add(fourInchSandwich);
                 case 8:
                     Sandwich eightInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
                     eightInchSandwich.setSandwichSize("8 Inches");
-                    if (userToastedResponse.equalsIgnoreCase("yes")) {
-                        eightInchSandwich.setToasted(true);
-                    }
+
+                    eightInchSandwich.setToasted(userToastedResponse.equalsIgnoreCase("yes"));
+                    eightInchSandwich.setExtraMeat(userExtraMeat.equalsIgnoreCase("yes"));
+                    eightInchSandwich.setExtraCheese(userExtraCheese.equalsIgnoreCase("yes"));
+
+                    priceSubtotal = 7.00;
+
+                    priceSubtotal += !userMeatToppings.isEmpty() ? 2.00 : 0;
+                    priceSubtotal += !userCheeseToppings.isEmpty() ? 1.50 : 0;
+
+                    eightInchSandwich.setPrice(priceSubtotal);
+
                     sandwichOrder.add(eightInchSandwich);
                 case 12:
                     Sandwich twelveInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
                     twelveInchSandwich.setSandwichSize("12 Inches");
-                    if (userToastedResponse.equalsIgnoreCase("yes")) {
-                        twelveInchSandwich.setToasted(true);
-                    }
+
+                    twelveInchSandwich.setToasted(userToastedResponse.equalsIgnoreCase("yes"));
+                    twelveInchSandwich.setExtraMeat(userExtraMeat.equalsIgnoreCase("yes"));
+                    twelveInchSandwich.setExtraCheese(userExtraCheese.equalsIgnoreCase("yes"));
+
+                    priceSubtotal = 8.50;
+
+                    priceSubtotal += !userMeatToppings.isEmpty() ? 3.00 : 0;
+                    priceSubtotal += !userCheeseToppings.isEmpty() ? 2.25 : 0;
+
+                    twelveInchSandwich.setPrice(priceSubtotal);
+
                     sandwichOrder.add(twelveInchSandwich);
 
             }
@@ -196,11 +231,11 @@ public class UserInterface {
 
         System.out.println("Drink Sizes: Small, Medium, or Large");
         System.out.print("What size of drink would you like?:");
-        String drinkSize = keyboard.nextLine();
+        String drinkSize = keyboard.nextLine().toLowerCase();
 
         System.out.println("Drink Flavors: " + String.join(", ", drinkFlavors));
         System.out.print("What flavor of drink would you like?:");
-        String drinkChoice = keyboard.nextLine();
+        String drinkChoice = keyboard.nextLine().toLowerCase();
 
         Drink userDrink = new Drink(drinkChoice, drinkSize);
 
@@ -217,6 +252,10 @@ public class UserInterface {
         Chip userChip = new Chip(chipChoice);
 
         customerOrder.setChips(userChip);
+
+    }
+
+    public static void processCheckoutRequest() {
 
     }
 
