@@ -26,7 +26,7 @@ public class Chip implements Product{
 
     //Getters and Setters
     public String getName() {
-        return name;
+        return String.format("%s", name);
     }
 
     public void setName(String name) {

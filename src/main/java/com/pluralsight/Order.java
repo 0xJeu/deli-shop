@@ -1,7 +1,8 @@
 package com.pluralsight;
 
-import com.pluralsight.products.*;
-
+import com.pluralsight.products.Chip;
+import com.pluralsight.products.Drink;
+import com.pluralsight.products.Sandwich;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,8 +13,7 @@ public class Order {
     private String customerName;
     Drink drink;
     Chip chips;
-    private String  dateTime;
-    private double price;
+    private String dateTime;
 
     //Constructors
     public Order(String customerName) {
@@ -33,10 +33,24 @@ public class Order {
 
     public double totalPrice() {
         double totalPrice = 0;
-        double sandwichSubtotal = sandwich.stream()
-                .mapToDouble(Sandwich::getPrice)
-                .sum();
-        totalPrice += sandwichSubtotal + drink.getPrice() + chips.getPrice();
+
+        // Calculate sandwich subtotal, skipping any null sandwiches
+        if (sandwich != null) {
+            totalPrice += sandwich.stream()
+                    .mapToDouble(Sandwich::getPrice)
+                    .sum();
+        }
+
+        // Add drink price if not null
+        if (drink != null) {
+            totalPrice += drink.getPrice();
+        }
+
+        // Add chips price if not null
+        if (chips != null) {
+            totalPrice += chips.getPrice();
+        }
+
         return totalPrice;
     }
 
@@ -73,11 +87,11 @@ public class Order {
         this.customerName = customerName;
     }
 
-    public String  getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(String  dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 }

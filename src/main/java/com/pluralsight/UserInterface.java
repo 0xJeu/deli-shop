@@ -4,7 +4,10 @@ import com.pluralsight.products.Chip;
 import com.pluralsight.products.Drink;
 import com.pluralsight.products.Sandwich;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class UserInterface {
@@ -98,9 +101,10 @@ public class UserInterface {
                     processAddChipRequest();
                     break;
                 case 4:
+                    processCheckoutRequest();
                     break;
                 case 0:
-                    break;
+                    return;
             }
         }
 
@@ -114,7 +118,7 @@ public class UserInterface {
             //bread input
             System.out.println("The available bread options are: " + String.join(", ", bread));
             System.out.print("Please select the type of bread you want:");
-            List<String> userBread = Collections.singletonList(keyboard.nextLine().toLowerCase());
+            List<String> userBread = List.of(keyboard.nextLine().toLowerCase());
 
             //meat topping input
             System.out.println("Meat Toppings:");
@@ -137,31 +141,31 @@ public class UserInterface {
             String userExtraCheese = keyboard.nextLine();
 
             //Veggie topping input
-            System.out.println("Cheese Toppings:");
-            System.out.println("The available cheese toppings options are: " + String.join(", ", veggieToppings));
+            System.out.println("Veggie Toppings:");
+            System.out.println("The available veggie toppings options are: " + String.join(", ", veggieToppings));
             System.out.print("Enter your desired toppings (separated by commas):");
             String veggieResponse = keyboard.nextLine().toLowerCase();
             List<String> userVeggieToppings = Arrays.asList(veggieResponse.split(Pattern.quote(",")));
 
             //Sauce input
             System.out.println("Sauces:");
-            System.out.println("The available cheese toppings options are: " + String.join(", ", sauces));
+            System.out.println("The available sauce options are: " + String.join(", ", sauces));
             System.out.print("Enter your desired sauces (separated by commas):");
             String sauceResponse = keyboard.nextLine().toLowerCase();
             List<String> userSauces = Arrays.asList(sauceResponse.split(Pattern.quote(",")));
 
             //Sides input
-            System.out.println("Sauces:");
-            System.out.println("The available cheese toppings options are: " + String.join(", ", sides));
+            System.out.println("Sides:");
+            System.out.println("The available side options are: " + String.join(", ", sides));
             System.out.print("Enter your desired sauces (separated by commas):");
             String sidesResponse = keyboard.nextLine().toLowerCase();
-            List<String> userSides = Arrays.asList(sauceResponse.split(Pattern.quote(",")));
+            List<String> userSides = Arrays.asList(sidesResponse.split(Pattern.quote(",")));
 
             //Toasted input
             System.out.print("Would you like your sandwich toasted? yes or no:");
             String userToastedResponse = keyboard.nextLine();
 
-            System.out.println("what size sandwich would you like to order? (4)inches, (8)inches, or  (12)inches: ");
+            System.out.print("what size sandwich would you like to order? (4)inches, (8)inches, or  (12)inches:");
             int sandwichSize = Integer.parseInt(keyboard.nextLine().toLowerCase());
 
             switch (sandwichSize) {
@@ -181,6 +185,7 @@ public class UserInterface {
                     fourInchSandwich.setPrice(priceSubtotal);
 
                     sandwichOrder.add(fourInchSandwich);
+                    break;
                 case 8:
                     Sandwich eightInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
                     eightInchSandwich.setSandwichSize("8 Inches");
@@ -197,6 +202,7 @@ public class UserInterface {
                     eightInchSandwich.setPrice(priceSubtotal);
 
                     sandwichOrder.add(eightInchSandwich);
+                    break;
                 case 12:
                     Sandwich twelveInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
                     twelveInchSandwich.setSandwichSize("12 Inches");
@@ -213,14 +219,17 @@ public class UserInterface {
                     twelveInchSandwich.setPrice(priceSubtotal);
 
                     sandwichOrder.add(twelveInchSandwich);
+                    break;
 
             }
+            System.out.println("Your sandwich has been added to the cart");
             System.out.print("Would you like to add another sandwich? yes or no:");
             String addAnother = keyboard.nextLine();
 
             if (addAnother.equalsIgnoreCase("yes")) {
                 return;
             } else {
+                customerOrder.setSandwich(sandwichOrder);
                 break;
             }
         }
@@ -240,6 +249,8 @@ public class UserInterface {
         Drink userDrink = new Drink(drinkChoice, drinkSize);
 
         customerOrder.setDrink(userDrink);
+        System.out.println("Your drink has been added to the cart");
+
     }
 
     public static void processAddChipRequest() {
@@ -252,11 +263,51 @@ public class UserInterface {
         Chip userChip = new Chip(chipChoice);
 
         customerOrder.setChips(userChip);
+        System.out.println("Your chips has been added to the cart");
+
 
     }
 
     public static void processCheckoutRequest() {
+        //prices have been implemented, need to test func as a customer to make sure everything gets calc correctly
 
+
+        // Display the order summary
+        System.out.println("Order Summary:");
+
+        // Display sandwiches
+        if (customerOrder.getSandwich() != null && !customerOrder.getSandwich().isEmpty()) {
+            System.out.println("Sandwiches:");
+            customerOrder.getSandwich().forEach(Sandwich::printSandwichDetails);
+        }
+
+        // Display drink
+        if (customerOrder.getDrink() != null) {
+            System.out.println("Drink:");
+            System.out.println(customerOrder.getDrink().getName());
+        }
+
+        // Display chips
+        if (customerOrder.getChips() != null) {
+            System.out.println("Chips:");
+            System.out.println(customerOrder.getChips().getName());
+        }
+
+        // Calculate total price
+        double totalPrice = customerOrder.totalPrice();
+        System.out.println("Total Price: $" + totalPrice);
+
+        // Prompt for confirmation
+        System.out.print("Would you like to confirm your order? (yes or no): ");
+        String confirm = keyboard.nextLine();
+
+        if (confirm.equalsIgnoreCase("yes")) {
+            FileManager.createReceipt(customerOrder);
+            System.out.println("Thank you for your order!");
+        } else {
+            System.out.println("Order canceled.");
+            //create a clear method on Order class that clears the product objects. preferably turn them null
+        }
+//        System.out.println(customerOrder.totalPrice());
     }
-
 }

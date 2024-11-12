@@ -38,7 +38,7 @@ public class Drink implements Product{
 
     //Getters and Setters
     public String getName() {
-        return name;
+        return String.format("%s %s", size,name);
     }
 
     public void setName(String name) {
