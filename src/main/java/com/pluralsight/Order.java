@@ -62,8 +62,6 @@ public class Order {
         this.sandwich = null;
         this.chips = null;
         this.drink = null;
-        this.customerName = "";
-        this.dateTime = null;
     }
 
     //Getters and Setters

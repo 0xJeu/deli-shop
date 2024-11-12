@@ -1,0 +1,28 @@
+=== ORDER RECEIPT ===
+Date: 2024-11-12
+Customer: Steph
+=== ORDER DETAILS ===
+SANDWICHES:
+Sandwich Size: 8 Inches
+Bread: white
+Meat Toppings: steak
+Cheese Toppings: swiss
+Veggie Toppings: mayo
+Sauces: peppers
+Sides: sauce
+
+Price: $12.1
+----------------
+Sandwich Size: 12 Inches
+Bread: wrap
+Meat Toppings: steak
+Cheese Toppings: swiss
+Veggie Toppings: ranch
+Sauces: peppers
+Sides: sauce
+
+Price: $15.25
+----------------
+
+TOTAL PRICE: $27.35
+=== THANK YOU FOR YOUR ORDER ===

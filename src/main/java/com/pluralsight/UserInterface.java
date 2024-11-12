@@ -14,7 +14,7 @@ public class UserInterface {
     static final Scanner keyboard = new Scanner(System.in);
     static String customerName = "";
 
-    public static void customerName(String name) {
+    public static void setCustomerName(String name) {
         customerName = name;
         customerOrder.setCustomerName(name);
     }
@@ -371,11 +371,13 @@ public class UserInterface {
             System.out.print("Would you like to add another sandwich? yes or no:");
             String addAnother = keyboard.nextLine();
 
-            if (addAnother.equalsIgnoreCase("yes")) {
-                return;
-            } else {
-                customerOrder.setSandwich(sandwichOrder);
-                break;
+            if (!addAnother.equalsIgnoreCase("yes")) {
+                if (addAnother.equalsIgnoreCase("no")) {
+                    customerOrder.setSandwich(sandwichOrder);
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                }
             }
         }
     }
@@ -394,7 +396,7 @@ public class UserInterface {
         Drink userDrink = new Drink(drinkChoice, drinkSize);
 
         customerOrder.setDrink(userDrink);
-        System.out.println("Your drink has been added to the cart");
+        System.out.println("Your drink has been added to the cart.");
 
     }
 
@@ -408,9 +410,7 @@ public class UserInterface {
         Chip userChip = new Chip(chipChoice);
 
         customerOrder.setChips(userChip);
-        System.out.println("Your chips has been added to the cart");
-
-
+        System.out.println("Your chips has been added to the cart.");
     }
 
     public static void processCheckoutRequest() {

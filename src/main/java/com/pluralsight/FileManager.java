@@ -30,6 +30,7 @@ public class FileManager {
 
             bufWriter.write("=== ORDER RECEIPT ===\n");
             bufWriter.write("Date: "+ date + "\n");
+            bufWriter.write("Time: "+ time + "\n");
             bufWriter.write("Customer: " + customerorder.getCustomerName() + "\n");
 
             bufWriter.write("=== ORDER DETAILS ===\n");

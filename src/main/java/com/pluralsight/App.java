@@ -6,10 +6,10 @@ public class App {
     public static void main(String[] args) {
         Scanner keyboard = new Scanner(System.in);
 
-        System.out.println("Welcome to the Deli Shop!");
+        System.out.println("Welcome to The Deli Den!");
         System.out.print("What is your name?:");
-        String customerName = keyboard.nextLine();
-        UserInterface.customerName(customerName);
+        String customerName = keyboard.nextLine().trim();
+        UserInterface.setCustomerName(customerName);
 
         while (true) {
 
@@ -21,12 +21,11 @@ public class App {
                     UserInterface.orderScreen();
                     break;
                 case 0:
-                    System.out.println("Thank you for stopping by!");
+                    System.out.printf("Thank you for stopping by, %s!", UserInterface.customerName);
                     System.exit(0);
                 default:
                     System.out.println("ERROR: INVALID OPTION. Please select an option from the home screen.");
             }
         }
-
     }
 }
