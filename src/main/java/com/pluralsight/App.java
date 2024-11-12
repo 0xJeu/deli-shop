@@ -9,7 +9,7 @@ public class App {
         System.out.println("Welcome to the Deli Shop!");
         System.out.print("What is your name?:");
         String customerName = keyboard.nextLine();
-        UserInterface.getCustomerName(customerName);
+        UserInterface.customerName(customerName);
 
         while (true) {
 

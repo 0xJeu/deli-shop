@@ -31,6 +31,7 @@ public class Order {
         this.dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
+    //Methods
     public double totalPrice() {
         double totalPrice = 0;
 
@@ -52,6 +53,17 @@ public class Order {
         }
 
         return totalPrice;
+    }
+
+    /**
+    * Clear product objects from class
+    * */
+    public void clearOrder() {
+        this.sandwich = null;
+        this.chips = null;
+        this.drink = null;
+        this.customerName = "";
+        this.dateTime = null;
     }
 
     //Getters and Setters
@@ -80,7 +92,7 @@ public class Order {
     }
 
     public String getCustomerName() {
-        return customerName;
+        return this.customerName;
     }
 
     public void setCustomerName(String customerName) {

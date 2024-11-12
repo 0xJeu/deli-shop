@@ -14,6 +14,11 @@ public class UserInterface {
     static final Scanner keyboard = new Scanner(System.in);
     static String customerName = "";
 
+    public static void customerName(String name) {
+        customerName = name;
+        customerOrder.setCustomerName(name);
+    }
+
     public static List<Sandwich> sandwichOrder = new ArrayList<>();
     public static Order customerOrder = new Order(customerName);
 
@@ -67,10 +72,6 @@ public class UserInterface {
 
     }
 
-    public static void getCustomerName(String name) {
-        customerName = name;
-    }
-
     public static void homeScreen() {
         System.out.print("""
                 1 - New Order
@@ -80,6 +81,7 @@ public class UserInterface {
 
     public static void orderScreen() {
         while (true) {
+            System.out.println("ORDER SCREEN");
             System.out.print("""
                     1) Add Sandwich
                     2) Add Drink
@@ -93,80 +95,222 @@ public class UserInterface {
             switch (userInput) {
                 case 1:
                     processAddSandwichRequest();
+                    System.out.println("------------");
                     break;
                 case 2:
                     processAddDrinkRequest();
+                    System.out.println("------------");
                     break;
                 case 3:
                     processAddChipRequest();
+                    System.out.println("------------");
                     break;
                 case 4:
                     processCheckoutRequest();
-                    break;
+                    System.out.println("------------");
+                    return;
                 case 0:
                     return;
+                default:
+                    System.out.println("ERROR: INVALID OPTION. Please select an option from the order screen.");
             }
         }
-
-
     }
 
     public static void processAddSandwichRequest() {
         while (true) {
-            double priceSubtotal = 0;
+            //Bread input
+            List<String> userBread = null;
+            while (userBread == null) {
+                System.out.println("The available bread options are: " + String.join(", ", bread));
+                System.out.print("Please select the type of bread you want:");
+                String breadInput = keyboard.nextLine().toLowerCase();
 
-            //bread input
-            System.out.println("The available bread options are: " + String.join(", ", bread));
-            System.out.print("Please select the type of bread you want:");
-            List<String> userBread = List.of(keyboard.nextLine().toLowerCase());
+                if (bread.contains(breadInput)) {
+                    userBread = List.of(breadInput);
+                } else {
+                    System.out.println("Invalid choice. Please try again.");
+                }
+            }
+            System.out.println("------------");
 
-            //meat topping input
-            System.out.println("Meat Toppings:");
-            System.out.println("The available meat toppings options are: " + String.join(", ", meatToppings));
-            System.out.print("Enter your desired toppings (separated by commas):");
-            String meatResponse = keyboard.nextLine().toLowerCase();
-            List<String> userMeatToppings = Arrays.asList(meatResponse.split(Pattern.quote(",")));
+            //Meat topping input
+            List<String> userMeatToppings = null;
+            while (userMeatToppings == null) {
+                System.out.println("Meat Toppings:");
+                System.out.println("The available meat toppings options are: " + String.join(", ", meatToppings));
+                System.out.print("Enter your desired toppings (separated by commas):");
+                String meatResponse = keyboard.nextLine().toLowerCase();
 
-            System.out.print("Would you like extra meat? yes or no:");
-            String userExtraMeat = keyboard.nextLine();
+                String[] selectedToppings = meatResponse.split(Pattern.quote(","));
+                boolean valid = true;
 
-            //cheese topping input
-            System.out.println("Cheese Toppings:");
-            System.out.println("The available cheese toppings options are: " + String.join(", ", cheeseToppings));
-            System.out.print("Enter your desired toppings (separated by commas):");
-            String cheeseResponse = keyboard.nextLine().toLowerCase();
-            List<String> userCheeseToppings = Arrays.asList(cheeseResponse.split(Pattern.quote(",")));
+                for (String topping : selectedToppings) {
+                    if (!meatToppings.contains(topping)) {
+                        valid = false;
+                        System.out.println("Invalid Topping: " + topping);
+                    }
+                }
 
-            System.out.print("Would you like extra cheese? yes or no:");
-            String userExtraCheese = keyboard.nextLine();
+                if (valid) {
+                    userMeatToppings = Arrays.asList(selectedToppings);
+                }
+            }
+            System.out.println("------------");
+
+            String userExtraMeat = null;
+            while (userExtraMeat == null) {
+                System.out.print("Would you like extra meat? yes or no:");
+                String input = keyboard.nextLine().toLowerCase();
+                if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("no")) {
+                    userExtraMeat = input;
+                } else {
+                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                }
+            }
+            System.out.println("------------");
+
+            //Cheese topping input
+            List<String> userCheeseToppings = null;
+            while (userCheeseToppings == null) {
+                System.out.println("Cheese Toppings:");
+                System.out.println("The available cheese toppings options are: " + String.join(", ", cheeseToppings));
+                System.out.print("Enter your desired toppings (separated by commas):");
+                String cheeseResponse = keyboard.nextLine().toLowerCase();
+
+                String[] selectedToppings = cheeseResponse.split(Pattern.quote(","));
+                boolean valid = true;
+
+                for (String topping : selectedToppings) {
+                    if (!cheeseToppings.contains(topping)) {
+                        valid = false;
+                        System.out.println("Invalid Topping: " + topping);
+                    }
+                }
+
+                if (valid) {
+                    userCheeseToppings = Arrays.asList(selectedToppings);
+                } else {
+                    System.out.println("Invalid choice. Please try again.");
+                }
+            }
+            System.out.println("------------");
+
+            String userExtraCheese = null;
+            while (userExtraCheese == null) {
+                System.out.print("Would you like extra cheese? yes or no:");
+                String input = keyboard.nextLine().toLowerCase();
+                if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("no")) {
+                    userExtraCheese = input;
+                } else {
+                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                }
+            }
+            System.out.println("------------");
 
             //Veggie topping input
-            System.out.println("Veggie Toppings:");
-            System.out.println("The available veggie toppings options are: " + String.join(", ", veggieToppings));
-            System.out.print("Enter your desired toppings (separated by commas):");
-            String veggieResponse = keyboard.nextLine().toLowerCase();
-            List<String> userVeggieToppings = Arrays.asList(veggieResponse.split(Pattern.quote(",")));
+            List<String> userVeggieToppings = null;
+            while (userVeggieToppings == null) {
+                System.out.println("Veggie Toppings:");
+                System.out.println("The available veggie toppings options are: " + String.join(", ", veggieToppings));
+                System.out.print("Enter your desired toppings (separated by commas):");
+                String veggieResponse = keyboard.nextLine().toLowerCase();
+
+                String[] selectedToppings = veggieResponse.split(Pattern.quote(","));
+                boolean valid = true;
+
+                for (String topping : selectedToppings) {
+                    if (!veggieToppings.contains(topping)) {
+                        valid = false;
+                        System.out.println("Invalid Topping: " + topping);
+                    }
+                }
+
+                if (valid) {
+                    userVeggieToppings = Arrays.asList(selectedToppings);
+                } else {
+                    System.out.println("Invalid choice. Please try again.");
+                }
+            }
+            System.out.println("------------");
 
             //Sauce input
-            System.out.println("Sauces:");
-            System.out.println("The available sauce options are: " + String.join(", ", sauces));
-            System.out.print("Enter your desired sauces (separated by commas):");
-            String sauceResponse = keyboard.nextLine().toLowerCase();
-            List<String> userSauces = Arrays.asList(sauceResponse.split(Pattern.quote(",")));
+            List<String> userSauces = null;
+            while (userSauces == null) {
+                System.out.println("Sauces:");
+                System.out.println("The available sauce options are: " + String.join(", ", sauces));
+                System.out.print("Enter your desired sauces (separated by commas):");
+                String sauceResponse = keyboard.nextLine().toLowerCase();
+
+                String[] selectedToppings = sauceResponse.split(Pattern.quote(","));
+                boolean valid = true;
+
+                for (String topping : selectedToppings) {
+                    if (!sauces.contains(topping)) {
+                        valid = false;
+                        System.out.println("Invalid Topping: " + topping);
+                    }
+                }
+
+                if (valid) {
+                    userSauces = Arrays.asList(selectedToppings);
+                } else {
+                    System.out.println("Invalid choice. Please try again.");
+                }
+            }
+            System.out.println("------------");
 
             //Sides input
-            System.out.println("Sides:");
-            System.out.println("The available side options are: " + String.join(", ", sides));
-            System.out.print("Enter your desired sauces (separated by commas):");
-            String sidesResponse = keyboard.nextLine().toLowerCase();
-            List<String> userSides = Arrays.asList(sidesResponse.split(Pattern.quote(",")));
+            List<String> userSides = null;
+            while (userSides == null) {
+                System.out.println("Sides:");
+                System.out.println("The available side options are: " + String.join(", ", sides));
+                System.out.print("Enter your desired sauces (separated by commas):");
+                String sidesResponse = keyboard.nextLine().toLowerCase();
+
+                String[] selectedToppings = sidesResponse.split(Pattern.quote(","));
+                boolean valid = true;
+
+                for (String topping : selectedToppings) {
+                    if (!sides.contains(topping)) {
+                        valid = false;
+                        System.out.println("Invalid Topping: " + topping);
+                    }
+                }
+
+                if (valid) {
+                    userSides = Arrays.asList(selectedToppings);
+                } else {
+                    System.out.println("Invalid choice. Please try again.");
+                }
+            }
+            System.out.println("------------");
 
             //Toasted input
-            System.out.print("Would you like your sandwich toasted? yes or no:");
-            String userToastedResponse = keyboard.nextLine();
+            String userToastedResponse = null;
+            while (userToastedResponse == null) {
+                System.out.print("WWould you like your sandwich toasted? yes or no:");
+                String input = keyboard.nextLine().toLowerCase();
+                if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("no")) {
+                    userToastedResponse = input;
+                } else {
+                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                }
+            }
+            System.out.println("------------");
 
-            System.out.print("what size sandwich would you like to order? (4)inches, (8)inches, or  (12)inches:");
-            int sandwichSize = Integer.parseInt(keyboard.nextLine().toLowerCase());
+            int sandwichSize = 0;
+            while (sandwichSize == 0) {
+                System.out.print("what size sandwich would you like to order? (4)inches, (8)inches, or  (12)inches:");
+                int input = Integer.parseInt(keyboard.nextLine().toLowerCase());
+                if (input == 4 || input == 8 || input == 12) {
+                    sandwichSize = input;
+                } else {
+                    System.out.println("Invalid choice. Please try again.");
+                }
+            }
+
+            double priceSubtotal = 0;
 
             switch (sandwichSize) {
                 case 4:
@@ -220,9 +364,10 @@ public class UserInterface {
 
                     sandwichOrder.add(twelveInchSandwich);
                     break;
-
             }
+
             System.out.println("Your sandwich has been added to the cart");
+            System.out.println("------------");
             System.out.print("Would you like to add another sandwich? yes or no:");
             String addAnother = keyboard.nextLine();
 
@@ -269,9 +414,6 @@ public class UserInterface {
     }
 
     public static void processCheckoutRequest() {
-        //prices have been implemented, need to test func as a customer to make sure everything gets calc correctly
-
-
         // Display the order summary
         System.out.println("Order Summary:");
 
@@ -305,9 +447,11 @@ public class UserInterface {
             FileManager.createReceipt(customerOrder);
             System.out.println("Thank you for your order!");
         } else {
+            //Clear customer order
+            customerOrder.clearOrder();
+            sandwichOrder.clear();
+
             System.out.println("Order canceled.");
-            //create a clear method on Order class that clears the product objects. preferably turn them null
         }
-//        System.out.println(customerOrder.totalPrice());
     }
 }

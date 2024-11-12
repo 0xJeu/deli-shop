@@ -23,23 +23,52 @@ public class FileManager {
         LocalDateTime today = LocalDateTime.now();
         String date = today.format(formattedDate);
         String time = today.format(formattedTime);
-        String fileName = String.format("src/main/resources/%s-%s.txt", date, time);
+        String filePath = String.format("src/main/resources/%s-%s.txt", date, time);
 
         try {
-            BufferedWriter bufWriter = new BufferedWriter(new FileWriter(fileName));
+            BufferedWriter bufWriter = new BufferedWriter(new FileWriter(filePath));
 
-            String allSandwichDetails = customerorder.getSandwich()
-                    .stream()
-                    .map(Sandwich::sandwichDetails)
-                    .collect(Collectors.joining("\n\n"));
+            bufWriter.write("=== ORDER RECEIPT ===\n");
+            bufWriter.write("Date: "+ date + "\n");
+            bufWriter.write("Customer: " + customerorder.getCustomerName() + "\n");
+
+            bufWriter.write("=== ORDER DETAILS ===\n");
+
+            //Sandwich details
+            if (customerorder.getSandwich() != null) {
+                bufWriter.write("SANDWICHES:\n");
+                for (Sandwich sandwich : customerorder.getSandwich()) {
+                    bufWriter.write(sandwich.sandwichDetails() + "\n");
+                    bufWriter.write("\nPrice: $" + sandwich.getPrice());
+                    bufWriter.write("\n----------------\n");
+                }
+            }
+
+            //Drink details
+            if (customerorder.getDrink() != null) {
+                bufWriter.write("DRINKS:\n");
+                bufWriter.write(customerorder.getDrink().getName() + "\n");
+                bufWriter.write("Price: $" + customerorder.getDrink().getPrice());
+                bufWriter.write("\n----------------\n");
+            }
+
+            //Chip details
+            if (customerorder.getChips() != null) {
+                bufWriter.write("CHIPS:\n");
+                bufWriter.write(customerorder.getChips().getName()+ "\n");
+                bufWriter.write("Price: $" + customerorder.getChips().getPrice());
+                bufWriter.write("\n----------------\n");
+            }
 
 
-
-
-                bufWriter.write(allSandwichDetails);
+            bufWriter.write("\nTOTAL PRICE: " + String.format("$%.2f\n", customerorder.totalPrice()));
+            bufWriter.write("=== THANK YOU FOR YOUR ORDER ===\n");
 
             //Release file
             bufWriter.close();
+
+            System.out.println("Receipt created at: " + filePath);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

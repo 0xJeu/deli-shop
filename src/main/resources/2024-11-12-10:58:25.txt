@@ -1,0 +1,11 @@
+=== ORDER RECEIPT ===
+Date: 2024-11-12
+Customer: Test
+=== ORDER DETAILS ===
+DRINKS:
+small water
+Price: $3.0
+----------------
+
+TOTAL PRICE: $3.00
+=== THANK YOU FOR YOUR ORDER ===
