@@ -425,24 +425,34 @@ public class UserInterface {
         // Display sandwiches
         if (customerOrder.getSandwich() != null && !customerOrder.getSandwich().isEmpty()) {
             System.out.println("Sandwiches:");
-            customerOrder.getSandwich().forEach(Sandwich::printSandwichDetails);
+            System.out.println("------------");
+            int count = 1;
+            for (Sandwich sandwich : customerOrder.getSandwich()) {
+                System.out.println("Sandwich #" + count++);
+                sandwich.printSandwichDetails();
+                System.out.println(sandwich.isExtraMeat() ? "Extra Meat: Yes" : "Extra Meat: No");
+                System.out.println(sandwich.isExtraCheese() ? "Extra Cheese: Yes" : "Extra Cheese: No");
+                System.out.println(sandwich.isToasted() ? "Toasted: Yes\n" : "Toasted: No\n");
+            }
         }
 
         // Display drink
         if (customerOrder.getDrink() != null) {
+            System.out.println("------------");
             System.out.println("Drink:");
             System.out.println(customerOrder.getDrink().getName());
         }
 
         // Display chips
         if (customerOrder.getChips() != null) {
+            System.out.println("------------");
             System.out.println("Chips:");
             System.out.println(customerOrder.getChips().getName());
         }
 
         // Calculate total price
-        double totalPrice = customerOrder.totalPrice();
-        System.out.println("Total Price: $" + totalPrice);
+        System.out.println("------------");
+        System.out.println("Total Price: $" + customerOrder.totalPrice());
 
         // Prompt for confirmation
         System.out.print("Would you like to confirm your order? (yes or no): ");

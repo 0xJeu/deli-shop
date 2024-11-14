@@ -40,7 +40,14 @@ public class FileManager {
                 bufWriter.write("SANDWICHES:\n");
                 for (Sandwich sandwich : customerorder.getSandwich()) {
                     bufWriter.write(sandwich.sandwichDetails() + "\n");
-                    bufWriter.write("\nPrice: $" + sandwich.getPrice());
+
+                    bufWriter.write(sandwich.isExtraMeat() ? "Extra Meat: Yes\n" : "Extra Meat: No\n");
+
+                    bufWriter.write(sandwich.isExtraCheese() ? "Extra Cheese: Yes\n" : "Extra Cheese: No\n");
+
+                    bufWriter.write(sandwich.isToasted() ? "Toasted: Yes\n" : "Toasted: No\n");
+
+                    bufWriter.write(String.format("\nPrice: $%.2f", sandwich.getPrice()));
                     bufWriter.write("\n----------------\n");
                 }
             }

@@ -1,0 +1,22 @@
+=== ORDER RECEIPT ===
+Date: 2024-11-14
+Time: 10:52:11
+Customer: Steph
+=== ORDER DETAILS ===
+SANDWICHES:
+Sandwich Size: 8 Inches
+Bread: white
+Meat Toppings: steak
+Cheese Toppings: swiss
+Veggie Toppings: mayo
+Sauces: peppers
+Sides: sauce
+Extra Meat: Yes
+Extra Cheese: No
+Toasted: Yes
+
+Price: $11.50
+----------------
+
+TOTAL PRICE: $11.50
+=== THANK YOU FOR YOUR ORDER ===
