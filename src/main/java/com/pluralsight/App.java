@@ -8,9 +8,9 @@ public class App {
 
         System.out.println("Welcome to The Deli Den!");
         System.out.print("What is your name?:");
-        String customerName = keyboard.nextLine().trim();
-        UserInterface.setCustomerName(customerName);
+        UserInterface.setCustomerName(keyboard.nextLine().trim());
 
+        //App functionality controlled here
         while (true) {
 
             UserInterface.homeScreen();

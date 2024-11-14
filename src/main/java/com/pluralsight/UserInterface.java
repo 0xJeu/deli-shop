@@ -19,9 +19,11 @@ public class UserInterface {
         customerOrder.setCustomerName(name);
     }
 
+    //Instantiate Objects that will be used to manage customer's orders
     public static List<Sandwich> sandwichOrder = new ArrayList<>();
     public static Order customerOrder = new Order(customerName);
 
+    //Lists that will hold the ingredients for the sandwich
     public static List<String> bread = new ArrayList<>();
     public static List<String> meatToppings = new ArrayList<>();
     public static List<String> cheeseToppings = new ArrayList<>();
@@ -81,6 +83,7 @@ public class UserInterface {
 
     public static void orderScreen() {
         while (true) {
+            System.out.println("------------");
             System.out.println("ORDER SCREEN");
             System.out.print("""
                     1) Add Sandwich
@@ -312,6 +315,7 @@ public class UserInterface {
 
             double priceSubtotal = 0;
 
+            //Switch statements controls the creation of the sandwich objects dependent on the user's selection
             switch (sandwichSize) {
                 case 4:
                     Sandwich fourInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
@@ -366,6 +370,7 @@ public class UserInterface {
                     break;
             }
 
+            //Prompt user for additional sandwich
             System.out.println("Your sandwich has been added to the cart");
             System.out.println("------------");
             System.out.print("Would you like to add another sandwich? yes or no:");
