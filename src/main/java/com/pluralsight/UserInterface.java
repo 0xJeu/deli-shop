@@ -44,11 +44,13 @@ public class UserInterface {
         meatToppings.add("roast beef");
         meatToppings.add("chicken");
         meatToppings.add("bacon");
+        meatToppings.add("n/a");
 
         cheeseToppings.add("american");
         cheeseToppings.add("provolone");
         cheeseToppings.add("cheddar");
         cheeseToppings.add("swiss");
+        cheeseToppings.add("n/a");
 
         veggieToppings.add("lettuce");
         veggieToppings.add("peppers");
@@ -60,6 +62,8 @@ public class UserInterface {
         veggieToppings.add("guacamole");
         veggieToppings.add("guacamole");
         veggieToppings.add("mushrooms");
+        veggieToppings.add("n/a");
+
 
         sauces.add("mayo");
         sauces.add("mustard");
@@ -67,9 +71,12 @@ public class UserInterface {
         sauces.add("ranch");
         sauces.add("thousand islands");
         sauces.add("vinaigrette");
+        sauces.add("n/a");
+
 
         sides.add("au jus");
         sides.add("sauce");
+        sides.add("n/a");
 
 
     }
@@ -162,16 +169,18 @@ public class UserInterface {
             System.out.println("------------");
 
             String userExtraMeat = null;
-            while (userExtraMeat == null) {
-                System.out.print("Would you like extra meat? yes or no:");
-                String input = keyboard.nextLine().toLowerCase();
-                if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("no")) {
-                    userExtraMeat = input;
-                } else {
-                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+            if (!userMeatToppings.contains("n/a")) {
+                while (userExtraMeat == null) {
+                    System.out.print("Would you like extra meat? yes or no:");
+                    String input = keyboard.nextLine().toLowerCase();
+                    if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("no")) {
+                        userExtraMeat = input;
+                    } else {
+                        System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                    }
                 }
+                System.out.println("------------");
             }
-            System.out.println("------------");
 
             //Cheese topping input
             List<String> userCheeseToppings = null;
@@ -200,16 +209,18 @@ public class UserInterface {
             System.out.println("------------");
 
             String userExtraCheese = null;
-            while (userExtraCheese == null) {
-                System.out.print("Would you like extra cheese? yes or no:");
-                String input = keyboard.nextLine().toLowerCase();
-                if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("no")) {
-                    userExtraCheese = input;
-                } else {
-                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+            if (!userCheeseToppings.contains("n/a")) {
+                while (userExtraCheese == null) {
+                    System.out.print("Would you like extra cheese? yes or no:");
+                    String input = keyboard.nextLine().toLowerCase();
+                    if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("no")) {
+                        userExtraCheese = input;
+                    } else {
+                        System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                    }
                 }
+                System.out.println("------------");
             }
-            System.out.println("------------");
 
             //Veggie topping input
             List<String> userVeggieToppings = null;
@@ -313,7 +324,7 @@ public class UserInterface {
                 }
             }
 
-            double priceSubtotal = 0;
+            double priceSubtotal;
 
             //Switch statements controls the creation of the sandwich objects dependent on the user's selection
             switch (sandwichSize) {
@@ -322,13 +333,18 @@ public class UserInterface {
                     fourInchSandwich.setSandwichSize("4 Inches");
 
                     fourInchSandwich.setToasted(userToastedResponse.equalsIgnoreCase("yes"));
-                    fourInchSandwich.setExtraMeat(userExtraMeat.equalsIgnoreCase("yes"));
-                    fourInchSandwich.setExtraCheese(userExtraCheese.equalsIgnoreCase("yes"));
+                    fourInchSandwich.setExtraMeat(userExtraMeat != null && userExtraMeat.equalsIgnoreCase("yes"));
+                    fourInchSandwich.setExtraCheese(userExtraCheese != null && userExtraCheese.equalsIgnoreCase("yes"));
 
                     priceSubtotal = 5.50;
 
-                    priceSubtotal += !userMeatToppings.isEmpty() ? 1.00 : 0;
-                    priceSubtotal += !userCheeseToppings.isEmpty() ? 0.75 : 0;
+                    if (!userMeatToppings.contains("n/a")) {
+                        priceSubtotal += !userMeatToppings.isEmpty() ? 1.00 : 0;
+                    }
+
+                    if (!userCheeseToppings.contains("n/a")) {
+                        priceSubtotal += !userCheeseToppings.isEmpty() ? 0.75 : 0;
+                    }
 
                     fourInchSandwich.setPrice(priceSubtotal);
 
@@ -339,13 +355,18 @@ public class UserInterface {
                     eightInchSandwich.setSandwichSize("8 Inches");
 
                     eightInchSandwich.setToasted(userToastedResponse.equalsIgnoreCase("yes"));
-                    eightInchSandwich.setExtraMeat(userExtraMeat.equalsIgnoreCase("yes"));
-                    eightInchSandwich.setExtraCheese(userExtraCheese.equalsIgnoreCase("yes"));
+                    eightInchSandwich.setExtraMeat(userExtraMeat != null && userExtraMeat.equalsIgnoreCase("yes"));
+                    eightInchSandwich.setExtraCheese(userExtraCheese != null && userExtraCheese.equalsIgnoreCase("yes"));
 
                     priceSubtotal = 7.00;
 
-                    priceSubtotal += !userMeatToppings.isEmpty() ? 2.00 : 0;
-                    priceSubtotal += !userCheeseToppings.isEmpty() ? 1.50 : 0;
+                    if (!userMeatToppings.contains("n/a")) {
+                        priceSubtotal += !userMeatToppings.isEmpty() ? 2.00 : 0;
+                    }
+
+                    if (!userCheeseToppings.contains("n/a")) {
+                        priceSubtotal += !userCheeseToppings.isEmpty() ? 1.50 : 0;
+                    }
 
                     eightInchSandwich.setPrice(priceSubtotal);
 
@@ -356,13 +377,18 @@ public class UserInterface {
                     twelveInchSandwich.setSandwichSize("12 Inches");
 
                     twelveInchSandwich.setToasted(userToastedResponse.equalsIgnoreCase("yes"));
-                    twelveInchSandwich.setExtraMeat(userExtraMeat.equalsIgnoreCase("yes"));
-                    twelveInchSandwich.setExtraCheese(userExtraCheese.equalsIgnoreCase("yes"));
+                    twelveInchSandwich.setExtraMeat(userExtraMeat != null && userExtraMeat.equalsIgnoreCase("yes"));
+                    twelveInchSandwich.setExtraCheese(userExtraCheese != null && userExtraCheese.equalsIgnoreCase("yes"));
 
                     priceSubtotal = 8.50;
 
-                    priceSubtotal += !userMeatToppings.isEmpty() ? 3.00 : 0;
-                    priceSubtotal += !userCheeseToppings.isEmpty() ? 2.25 : 0;
+                    if (!userMeatToppings.contains("n/a")) {
+                        priceSubtotal += !userMeatToppings.isEmpty() ? 3.00 : 0;
+                    }
+
+                    if (!userCheeseToppings.contains("n/a")) {
+                        priceSubtotal += !userCheeseToppings.isEmpty() ? 2.25 : 0;
+                    }
 
                     twelveInchSandwich.setPrice(priceSubtotal);
 
@@ -428,7 +454,10 @@ public class UserInterface {
             System.out.println("------------");
             int count = 1;
             for (Sandwich sandwich : customerOrder.getSandwich()) {
-                System.out.println("Sandwich #" + count++);
+                if (customerOrder.getSandwich().size() > 1) {
+                    System.out.println("Sandwich #" + count++);
+                }
+
                 sandwich.printSandwichDetails();
                 System.out.println(sandwich.isExtraMeat() ? "Extra Meat: Yes" : "Extra Meat: No");
                 System.out.println(sandwich.isExtraCheese() ? "Extra Cheese: Yes" : "Extra Cheese: No");
