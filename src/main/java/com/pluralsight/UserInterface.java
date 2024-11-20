@@ -328,71 +328,21 @@ public class UserInterface {
 
             //Switch statements controls the creation of the sandwich objects dependent on the user's selection
             switch (sandwichSize) {
-                case 4:
-                    Sandwich fourInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
-                    fourInchSandwich.setSandwichSize("4 Inches");
+                case 4, 8 , 12:
+                    Sandwich sandwich = createSandwich(
+                            sandwichSize,
+                            userBread,
+                            userMeatToppings,
+                            userCheeseToppings,
+                            userVeggieToppings,
+                            userSauces,
+                            userSides,
+                            userToastedResponse,
+                            userExtraMeat,
+                            userExtraCheese
+                    );
 
-                    fourInchSandwich.setToasted(userToastedResponse.equalsIgnoreCase("yes"));
-                    fourInchSandwich.setExtraMeat(userExtraMeat != null && userExtraMeat.equalsIgnoreCase("yes"));
-                    fourInchSandwich.setExtraCheese(userExtraCheese != null && userExtraCheese.equalsIgnoreCase("yes"));
-
-                    priceSubtotal = 5.50;
-
-                    if (!userMeatToppings.contains("n/a")) {
-                        priceSubtotal += !userMeatToppings.isEmpty() ? 1.00 : 0;
-                    }
-
-                    if (!userCheeseToppings.contains("n/a")) {
-                        priceSubtotal += !userCheeseToppings.isEmpty() ? 0.75 : 0;
-                    }
-
-                    fourInchSandwich.setPrice(priceSubtotal);
-
-                    sandwichOrder.add(fourInchSandwich);
-                    break;
-                case 8:
-                    Sandwich eightInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
-                    eightInchSandwich.setSandwichSize("8 Inches");
-
-                    eightInchSandwich.setToasted(userToastedResponse.equalsIgnoreCase("yes"));
-                    eightInchSandwich.setExtraMeat(userExtraMeat != null && userExtraMeat.equalsIgnoreCase("yes"));
-                    eightInchSandwich.setExtraCheese(userExtraCheese != null && userExtraCheese.equalsIgnoreCase("yes"));
-
-                    priceSubtotal = 7.00;
-
-                    if (!userMeatToppings.contains("n/a")) {
-                        priceSubtotal += !userMeatToppings.isEmpty() ? 2.00 : 0;
-                    }
-
-                    if (!userCheeseToppings.contains("n/a")) {
-                        priceSubtotal += !userCheeseToppings.isEmpty() ? 1.50 : 0;
-                    }
-
-                    eightInchSandwich.setPrice(priceSubtotal);
-
-                    sandwichOrder.add(eightInchSandwich);
-                    break;
-                case 12:
-                    Sandwich twelveInchSandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userSauces, userVeggieToppings, userSides);
-                    twelveInchSandwich.setSandwichSize("12 Inches");
-
-                    twelveInchSandwich.setToasted(userToastedResponse.equalsIgnoreCase("yes"));
-                    twelveInchSandwich.setExtraMeat(userExtraMeat != null && userExtraMeat.equalsIgnoreCase("yes"));
-                    twelveInchSandwich.setExtraCheese(userExtraCheese != null && userExtraCheese.equalsIgnoreCase("yes"));
-
-                    priceSubtotal = 8.50;
-
-                    if (!userMeatToppings.contains("n/a")) {
-                        priceSubtotal += !userMeatToppings.isEmpty() ? 3.00 : 0;
-                    }
-
-                    if (!userCheeseToppings.contains("n/a")) {
-                        priceSubtotal += !userCheeseToppings.isEmpty() ? 2.25 : 0;
-                    }
-
-                    twelveInchSandwich.setPrice(priceSubtotal);
-
-                    sandwichOrder.add(twelveInchSandwich);
+                    sandwichOrder.add(sandwich);
                     break;
             }
 
@@ -461,7 +411,7 @@ public class UserInterface {
                 sandwich.printSandwichDetails();
                 System.out.println(sandwich.isExtraMeat() ? "Extra Meat: Yes" : "Extra Meat: No");
                 System.out.println(sandwich.isExtraCheese() ? "Extra Cheese: Yes" : "Extra Cheese: No");
-                System.out.println(sandwich.isToasted() ? "Toasted: Yes\n" : "Toasted: No\n");
+                System.out.println(sandwich.isToasted() ? "Toasted: Yes" : "Toasted: No");
             }
         }
 
@@ -497,5 +447,55 @@ public class UserInterface {
 
             System.out.println("Order canceled.");
         }
+    }
+
+    private  static Sandwich createSandwich(int sandwichSize, List<String> userBread, List<String> userMeatToppings,
+                                    List<String> userCheeseToppings, List<String> userVeggieToppings,
+                                    List<String> userSauces, List<String> userSides,
+                                    String userToastedResponse, String userExtraMeat,
+                                    String userExtraCheese) {
+
+        String sizeString = sandwichSize + " Inches";
+        Sandwich sandwich = new Sandwich(userBread, userMeatToppings, userCheeseToppings, userVeggieToppings, userSauces, userSides);
+        sandwich.setSandwichSize(sizeString);
+
+        sandwich.setToasted(userToastedResponse.equalsIgnoreCase("yes"));
+        sandwich.setExtraMeat(userExtraMeat != null && userExtraMeat.equalsIgnoreCase("yes"));
+        sandwich.setExtraCheese(userExtraCheese != null && userExtraCheese.equalsIgnoreCase("yes"));
+
+        double basePrice = 0, meatPrice = 0, cheesePrice = 0;
+
+        switch (sandwichSize) {
+            case 4:
+                basePrice = 5.50;
+                meatPrice = 1.00;
+                cheesePrice = 0.75;
+                break;
+            case 8:
+                basePrice = 7.00;
+                meatPrice = 2.00;
+                cheesePrice = 1.50;
+                break;
+            case 12:
+                basePrice = 8.50;
+                meatPrice = 3.00;
+                cheesePrice = 2.25;
+                break;
+            default:
+                System.out.println("Invalid sandwich size");
+        }
+
+        double priceSubtotal = basePrice;
+
+        if (!userMeatToppings.contains("n/a")) {
+            priceSubtotal += !userMeatToppings.isEmpty() ? meatPrice : 0;
+        }
+        if (!userCheeseToppings.contains("n/a")) {
+            priceSubtotal += !userCheeseToppings.isEmpty() ? cheesePrice : 0;
+        }
+
+        sandwich.setPrice(priceSubtotal);
+
+        return sandwich;
     }
 }
